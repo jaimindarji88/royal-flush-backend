@@ -1,0 +1,3 @@
+[submodule "pokerstove"]
+	path = pokerstove
+	url = https://github.com/andrewprock/pokerstove
