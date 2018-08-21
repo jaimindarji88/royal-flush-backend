@@ -5,5 +5,8 @@
   "main": "index.js",
   "author": "jaimin darji",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "shelljs": "^0.8.2"
+  }
 }
