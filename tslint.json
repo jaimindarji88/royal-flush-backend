@@ -4,6 +4,7 @@
   "rules": {
       "object-literal-sort-keys": false,
       "no-var-requires": false,
-      "indent": [true, "spaces", 2]
+      "indent": [true, "spaces", 2],
+      no-r
   }
 }

@@ -1,6 +1,5 @@
 import {SUIT_INDEX, SUIT_INDEX_VALS} from './constants';
 
-
 export default class Card {
 
   public static handIsHidden(hand: Card[]) {
