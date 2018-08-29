@@ -2,8 +2,6 @@ import _ from 'lodash';
 
 import Card from './Card';
 
-import { ICards } from './constants';
-
 export interface IHash {
   [key: number] : number
 }
