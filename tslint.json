@@ -2,9 +2,8 @@
   "defaultSeverity": "error",
   "extends": ["tslint-config-airbnb"],
   "rules": {
-      "object-literal-sort-keys": false,
-      "no-var-requires": false,
-      "indent": [true, "spaces", 2],
-      no-r
+    "object-literal-sort-keys": false,
+    "no-var-requires": false,
+    "indent": [true, "spaces", 2],
   }
 }
