@@ -94,46 +94,49 @@ export default class AnalyseCards {
 
   private analyse(): void {
     let count = 0;
+    let rank = 0;
     for (const val in this.valHash) {
       if (this.valHash[val] === 2) {
         this.analysed.pair = true;
-        this.analysed.rank = 1;
+        rank = 1;
         count += 1;
         if (count > 1) {
           this.analysed.pair = false;
           this.analysed.two_pair = true;
-          this.analysed.rank = 2;
+          rank = 2;
         }
       } else if(this.valHash[val] === 3) {
         this.analysed.set = true;
-        this.analysed.rank = 3;
+        rank = 3;
       } else if(this.valHash[val] === 4) {
         this.analysed.quads = true;
-        this.analysed.rank = 7;
+        rank = 7;
       }
     }
 
     if (this.detectStraight()) {
       this.analysed.straight = true;
-      this.analysed.rank = 4;
+      rank = 4;
     }
 
     for (const suit in this.suitHash) {
       if (this.suitHash[suit] === 5) {
         this.analysed.flush = true;
-        this.analysed.rank = 5;
+        rank = 5;
       }
     }
 
     if (this.analysed.pair && this.analysed.set) {
       this.analysed.full_house = true;
-      this.analysed.rank = 6;
+      rank = 6;
     }
 
     if (this.analysed.straight && this.analysed.flush) {
       this.analysed.straight_flush = true;
-      this.analysed.rank = 8;
+      rank = 8;
     }
+
+    this.analysed.rank = rank;
   }
 
   private detectStraight():boolean {
