@@ -18,12 +18,10 @@ function *generateRandomBoards(deck:Deck, boardLength:number, n:number):Iterable
 export function createHistogram(deck: Deck, hand: Card[], iters = 1000) {
 
   const histogram:IHistogram = { ...HISTOGRAM };
-
+  
   for (const board of generateRandomBoards(deck, 5, iters)) {
-
     const analysedHand =  new Analyse(board.concat(hand));
     const { rankName } = analysedHand;
-
     if (rankName in histogram) {
       histogram[rankName] += 1;
     }
