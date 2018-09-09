@@ -2,32 +2,31 @@ const Iter =  require('es-iter');
 import _ from 'lodash';
 
 import Card from './Card';
-import { SUIT_INDEX, VALS } from './constants';
-import Random from './Random';
+import { VALS, SUIT_VALS } from './constants';
+import randomEngine from './engine';
 
-import { MT19937 } from 'random-js';
+import Random, { MT19937 } from 'random-js';
 
 export default class Deck {
 
-  public static generateHoleCards(deck: Deck, numHidden: number = 2):Card[] {
-    return new Iter(deck.cards).combinations(numHidden * 2);
-  }
-
   public cards: Card[];
-  public random: MT19937;
+  public engine: MT19937;
   constructor(holeCards: Card[] = [], seed:number | null = null) {
     this.cards = this.generateDeck(holeCards);
     if (seed) {
-      this.random = Random.seed(seed);
+      this.engine = randomEngine.seed(seed);
     } else {
-      this.random = Random.autoSeed();
+      this.engine = randomEngine.autoSeed();
     }
   }
 
+  public generateHoleCards(numHidden: number = 2):Card[] {
+    return new Iter(this.cards).combinations(numHidden * 2);
+  }
+
   public pickCard() {
-    const card = this.random.pick(this.cards);
-    this.cards = this.cards.filter(c => !c.exact_equals(card));
-    return card;
+    this.cards = Random.shuffle(this.engine, this.cards);
+    return this.cards.pop();
   }
 
   public add(cards: Card[]) {
@@ -36,18 +35,22 @@ export default class Deck {
 
   private generateDeck(holeCards: Card[]) {
     const deck:Card[] = [];
-    for (const suit of Object.keys(SUIT_INDEX)) {
-      for (const value of VALS) {
+    for (const val of VALS) {
+      for (const suit of SUIT_VALS) {
+        const card = new Card(val, suit);
+        let skip = false;
 
-        const card = new Card(value, suit);
-        for (const holeC of holeCards) {
-          if (!card.exact_equals(holeC)) {
-            deck.push(card);
+        for (const hc of holeCards) {
+          if (hc.exact_equals(card)) {
+            skip = true;
           }
         }
-      };
+        if (skip) {
+          continue;
+        }
+        deck.push(card);
+      }
     }
-
     return deck;
   }
 }

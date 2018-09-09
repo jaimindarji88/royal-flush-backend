@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es2017",
+    "target": "es6",
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
@@ -10,8 +10,7 @@
     "outDir": "dist",
     "rootDir": "src",
     "lib": [
-      "es2015",
-      "es5",
+      "es2017",
       "dom"
     ],
     "downlevelIteration": true

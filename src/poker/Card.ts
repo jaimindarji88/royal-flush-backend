@@ -13,14 +13,17 @@ export default class Card {
 
   public readonly value: number;
   public readonly suit: number;
+  public readonly string: string;
 
   constructor(val:string | null, s:string | null) {
     if (val && s) {
       this.value = SUIT_INDEX_VALS[val];
       this.suit  = SUIT_INDEX[s];
+      this.string = val + s;
     } else {
       this.value = 0;
       this.suit  = 0;
+      this.string = 'random';
     }
   }
 
