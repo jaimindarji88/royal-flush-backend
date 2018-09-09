@@ -1,24 +1,10 @@
 import _ from 'lodash';
 
 import Card from './Card';
+import { handRanks } from './constants';
 
 export interface IHash {
-  [key: number] : number
-}
-
-export interface IAnalysis {
-  cards: Card[];
-  high_card: Card;
-  pair: boolean;
-  two_pair: boolean;
-  set: boolean;
-  quads: boolean;
-  straight: boolean;
-  flush: boolean;
-  full_house: boolean;
-  straight_flush: boolean;
-  rank: number;
-  [key:string]: boolean | Card | Card[] | number;
+  [key: number] : number;
 }
 
 export default class AnalyseCards {
@@ -64,80 +50,71 @@ export default class AnalyseCards {
 
   public valHash: IHash;
   public suitHash: IHash;
-  public analysed: IAnalysis;
-  private highCard: Card;
+  public rank: number;
+  public rankName: string;
 
   constructor(public cards: Card[]) {
     this.cards    = AnalyseCards.sortCards(cards);
     this.valHash  = AnalyseCards.cardsToValueHash(cards);
     this.suitHash = AnalyseCards.cardsToSuitHash(cards);
-    this.highCard = _.last(this.cards) as Card;
 
-    this.analysed = {
-      cards: this.cards,
-      high_card: this.highCard,
-      pair: false,
-      two_pair: false,
-      set: false,
-      quads: false,
-      straight: false,
-      straight_flush: false,
-      full_house: false,
-      flush: false,
-      rank: 0,
-    };
-
-    this.analyse();
+    this.rank = this.analyse();
+    this.rankName = handRanks[this.rank];
   }
 
-  private analyse(): void {
+  private analyse(): number {
     let count = 0;
     let rank = 0;
+
+    let pair;
+    let straight;
+    let set;
+    let flush;
+
     for (const val in this.valHash) {
       if (this.valHash[val] === 2) {
-        this.analysed.pair = true;
+        pair = true;
         rank = 1;
         count += 1;
         if (count > 1) {
-          this.analysed.pair = false;
-          this.analysed.two_pair = true;
           rank = 2;
         }
       } else if(this.valHash[val] === 3) {
-        this.analysed.set = true;
+        set = true;
         rank = 3;
       } else if(this.valHash[val] === 4) {
-        this.analysed.quads = true;
         rank = 7;
       }
     }
 
     if (this.detectStraight()) {
-      this.analysed.straight = true;
+      straight = true;
       rank = 4;
     }
 
     for (const suit in this.suitHash) {
       if (this.suitHash[suit] === 5) {
-        this.analysed.flush = true;
+        flush = true;
         rank = 5;
       }
     }
 
-    if (this.analysed.pair && this.analysed.set) {
-      this.analysed.full_house = true;
+    if (pair && set) {
       rank = 6;
     }
 
-    if (this.analysed.straight && this.analysed.flush) {
-      this.analysed.straight_flush = true;
+    if (straight && flush) {
       rank = 8;
+
+      if (this.detectRoyal()) {
+        rank = 9;
+      }
     }
 
-    this.analysed.rank = rank;
+    return rank;
   }
 
-  private detectStraight():boolean {
+  private detectStraight(): boolean {
     let continuous = 0;
     const vals = Object.keys(this.valHash).sort();
     for (let i = 0; i < vals.length - 1; i += 1) {
@@ -146,9 +123,25 @@ export default class AnalyseCards {
       }
     }
 
-    if (continuous === 5) {
+    if (continuous >= 5) {
       return true;
     }
     return false;
+  }
+
+  private detectRoyal(): boolean {
+    const royal = ['10', 'J', 'Q', 'K', 'A'];
+    const getSuit = _.maxBy(Object.entries(this.suitHash), e => e[1]);
+
+    if (getSuit) {
+      for (const val of royal) {
+        const card = new Card(val, getSuit[0]);
+
+        if (!_.includes(this.cards, card)) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
