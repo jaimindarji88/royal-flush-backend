@@ -17,10 +17,9 @@ const fullDeck = [
   new Card('2', 's'), new Card('2', 'c'), new Card('2', 'h'), new Card('2', 'd'),
 ];
 
-describe('creates a deck', () => {
+describe('creates a', () => {
   test('full deck', () => {
     const deck = new Deck();
-    console.log(deck.cards);
 
     expect(deck.cards).toEqual(fullDeck);
   });
