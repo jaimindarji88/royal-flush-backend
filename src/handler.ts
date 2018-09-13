@@ -1,23 +1,21 @@
-import { Context, S3Event } from 'aws-lambda';
+import { Context, APIGatewayProxyEvent } from 'aws-lambda';
 
-module.exports.hello = async (event: S3Event, context: Context) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event,
-    }),
-  };
+export const hello = async (event: APIGatewayProxyEvent, context: Context) => {
+  if (event.body) {
+    return {
+      statusCode: 200,
+      body: JSON.stringify(JSON.parse(event.body)),
+    };
+  }
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+  return { event, message: 'Go Serverless v1.0! Your function executed successfully!' };
 };
 
-module.exports.histogram = async (event: S3Event, context: Context) => {
+export const histogram = async (event: APIGatewayProxyEvent, context: Context) => {
   return {
     statusCode: 200,
     body: JSON.stringify({
       message: 'memes.meme',
     }),
-  }
+  };
 };

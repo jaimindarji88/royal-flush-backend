@@ -12,12 +12,12 @@ custom:
 
 package:
   include:
-    - dist/handler.js
-    - dist/**/*
+    - dist/**
     - pokerstove/build/bin/ps-eval
+    - pokerstove/build/bin/ps-lut
+    - pokerstove/build/bin/ps-colex
   exclude:
-    - src/**/*
-    - pokerstove/**/*
+    - ./**
 
 functions:
   hello:
