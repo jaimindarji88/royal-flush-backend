@@ -1,6 +1,14 @@
-import {SUIT_INDEX, SUIT_INDEX_VALS} from './constants';
+import _ from 'lodash';
+
+import { SUIT_INDEX, SUIT_INDEX_VALS } from './constants';
 
 export default class Card {
+
+  public static stringToCards(str: string): Card[] {
+    const formatted = _.compact(str.split(/(\w[s|c|h|d])/));
+
+    return formatted.map(card => new Card(card[0], card[1]));
+  }
 
   public static handIsHidden(hand: Card[]) {
     for (const card of hand) {
@@ -15,14 +23,14 @@ export default class Card {
   public readonly suit: number;
   public readonly string: string;
 
-  constructor(val:string | null, s:string | null) {
+  constructor(val: string | null, s: string | null) {
     if (val && s) {
       this.value = SUIT_INDEX_VALS[val];
-      this.suit  = SUIT_INDEX[s];
+      this.suit = SUIT_INDEX[s];
       this.string = val + s;
     } else {
       this.value = 0;
-      this.suit  = 0;
+      this.suit = 0;
       this.string = 'random';
     }
   }
@@ -34,7 +42,7 @@ export default class Card {
   public exact_equals(other: Card) {
     return (
       this.value === other.value &&
-      this.suit  === other.suit
+      this.suit === other.suit
     );
   }
 
