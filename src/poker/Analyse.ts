@@ -4,7 +4,7 @@ import Card from './Card';
 import { handRanks } from './constants';
 
 export interface IHash {
-  [key: number] : number;
+  [key: number]: number;
 }
 
 export default class AnalyseCards {
@@ -24,7 +24,7 @@ export default class AnalyseCards {
   }
 
   public static cardsToValueHash(cards: Card[]) {
-    const hash:IHash = {};
+    const hash: IHash = {};
     cards.forEach((card) => {
       if (card.value in hash) {
         hash[card.value] += 1;
@@ -54,8 +54,8 @@ export default class AnalyseCards {
   public rankName: string;
 
   constructor(public cards: Card[]) {
-    this.cards    = AnalyseCards.sortCards(cards);
-    this.valHash  = AnalyseCards.cardsToValueHash(cards);
+    this.cards = AnalyseCards.sortCards(cards);
+    this.valHash = AnalyseCards.cardsToValueHash(cards);
     this.suitHash = AnalyseCards.cardsToSuitHash(cards);
 
     this.rank = this.analyse();
@@ -79,10 +79,10 @@ export default class AnalyseCards {
         if (count > 1) {
           rank = 2;
         }
-      } else if(this.valHash[val] === 3) {
+      } else if (this.valHash[val] === 3) {
         set = true;
         rank = 3;
-      } else if(this.valHash[val] === 4) {
+      } else if (this.valHash[val] === 4) {
         rank = 7;
       }
     }

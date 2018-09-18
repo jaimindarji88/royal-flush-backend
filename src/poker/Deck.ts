@@ -1,4 +1,4 @@
-const Iter =  require('es-iter');
+const Iter = require('es-iter');
 import _ from 'lodash';
 
 import Card from './Card';
@@ -11,7 +11,7 @@ export default class Deck {
 
   public cards: Card[];
   public engine: MT19937;
-  constructor(holeCards: Card[] = [], seed:number | null = null) {
+  constructor(holeCards: Card[] = [], seed: number | null = null) {
     this.cards = this.generateDeck(holeCards);
     if (seed) {
       this.engine = randomEngine.seed(seed);
@@ -20,7 +20,7 @@ export default class Deck {
     }
   }
 
-  public generateHoleCards(numHidden: number = 2):Card[] {
+  public generateHoleCards(numHidden: number = 2): Card[] {
     return new Iter(this.cards).combinations(numHidden * 2);
   }
 
@@ -34,7 +34,7 @@ export default class Deck {
   }
 
   private generateDeck(holeCards: Card[]) {
-    const deck:Card[] = [];
+    const deck: Card[] = [];
     for (const val of VALS) {
       for (const suit of SUIT_VALS) {
         const card = new Card(val, suit);
