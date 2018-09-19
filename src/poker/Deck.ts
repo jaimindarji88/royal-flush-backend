@@ -8,7 +8,6 @@ import randomEngine from './engine';
 import Random, { MT19937 } from 'random-js';
 
 export default class Deck {
-
   public cards: Card[];
   public engine: MT19937;
   constructor(holeCards: Card[] = [], seed: number | null = null) {
@@ -41,6 +40,10 @@ export default class Deck {
         let skip = false;
 
         for (const hc of holeCards) {
+          if (hc.isHidden()) {
+            continue;
+          }
+
           if (hc.exact_equals(card)) {
             skip = true;
           }

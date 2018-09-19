@@ -8,16 +8,17 @@ import Deck from './Deck';
 
 import { HISTOGRAM, IHistogram } from './constants';
 
-export
-  function* generateRandomBoards(deck: Deck, boardLength: number, n: number):
-  IterableIterator<Card[]> {
+export function* generateRandomBoards(
+  deck: Deck,
+  boardLength: number,
+  n: number,
+): IterableIterator<Card[]> {
   for (let i = 0; i < n; i += 1) {
     yield Random.sample(deck.engine, deck.cards, boardLength);
   }
 }
 
 export function createHistogram(deck: Deck, hand: Card[], iters = 1000) {
-
   const histogram: IHistogram = { ...HISTOGRAM };
 
   for (const board of generateRandomBoards(deck, 5, iters)) {
@@ -35,4 +36,8 @@ export function createHistogram(deck: Deck, hand: Card[], iters = 1000) {
   }
 
   return histogram;
+}
+
+export function calcOdds(hands: Card[][], board: Card[]) {
+  // const handString = hands.reduce();
 }
