@@ -8,9 +8,9 @@
   "private": false,
   "scripts": {
     "test": "jest",
-    "watch-ts": "tsc -w",
+    "tsc": "tsc",
     "watch-sls": "sls offline",
-    "start": "concurrently -k -p \"[{name}]\" -n \"TypeScript,SLS\" -c \"cyan.bold,yellow.bold\" \"npm run watch-ts\" \"npm run watch-sls\""
+    "start": "concurrently -k -p \"[{name}]\" -n \"TypeScript,SLS\" -c \"cyan.bold,yellow.bold\" \"npm run tsc -- -w\" \"npm run watch-sls\""
   },
   "dependencies": {
     "es-iter": "^1.1.1",
