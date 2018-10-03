@@ -13,7 +13,7 @@ custom:
 package:
   include:
     - dist/**
-    - build/Release/**
+    - build/**
     - node_modules/**
   exclude:
     - ./**
