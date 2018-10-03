@@ -3,6 +3,8 @@ service: royal-flush
 provider:
   name: aws
   runtime: nodejs8.10
+  environment:
+    LD_LIBRARY_PATH: build/Release
 
 custom:
   src: dist
