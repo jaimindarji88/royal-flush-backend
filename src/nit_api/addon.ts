@@ -1,4 +1,4 @@
-const addon = require('../../build/cli/nit-addon');
+const addon = require('../../build/Release/nit-addon');
 
 export interface IObj {
   hands: string[];
