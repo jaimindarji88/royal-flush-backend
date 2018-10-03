@@ -1,14 +1,12 @@
 import { Context, APIGatewayProxyEvent } from 'aws-lambda';
 
-const hello = async (event: APIGatewayProxyEvent, context: Context) => {
-  if (event.body) {
-    return {
-      statusCode: 200,
-      body: JSON.stringify(JSON.parse(event.body)),
-    };
-  }
+import { nit } from '../nit_api';
 
-  return { event, message: 'Go Serverless v1.0! Your function executed successfully!' };
-};
+export default async function (event: APIGatewayProxyEvent, context: Context) {
+  const odds = nit(['.', '.'], 'As2c4d9s10c');
 
-export default hello;
+  return {
+    statusCode: 200,
+    body: JSON.stringify(odds),
+  };
+}

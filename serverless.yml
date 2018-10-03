@@ -13,7 +13,8 @@ custom:
 package:
   include:
     - dist/**
-    - build/Release/nit-addon.node
+    - build/Release/**
+    - node_modules/**
   exclude:
     - ./**
 
@@ -23,7 +24,7 @@ functions:
     events:
       - http:
           path: api/hello
-          method: post
+          method: get
   histogram:
     handler: ${self:custom.functions.histogram}
     events:

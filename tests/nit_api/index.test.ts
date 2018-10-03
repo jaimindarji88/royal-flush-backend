@@ -10,9 +10,4 @@ describe('testing the pokerstove api in nodejs', async () => {
     expect(odds.hands[0].win).toBeCloseTo(0.49, 1)
     expect(odds.hands[1].win).toBeCloseTo(0.49, 1)
   });
-
-  test('Best hand vs Worst hand', async () => {
-    const odds = await nit(['AsAc', '2s7c']);
-
-  });
 });

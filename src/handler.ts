@@ -1,3 +1,2 @@
-import { Context, APIGatewayProxyEvent } from 'aws-lambda';
-
 export { default as histogram } from './endpoints/histogram';
+export { default as hello } from './endpoints/hello';

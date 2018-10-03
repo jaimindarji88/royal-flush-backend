@@ -1,10 +1,10 @@
 import addon from './addon';
 
-export const nit = async function (hands: string[], board: string = '') {
+export const nit = async function (hands: string[] = [], board: string = '') {
   const obj = {
-    hands: hands,
-    board: board
+    hands,
+    board,
   };
-  
+
   return addon.calculateOdds(obj);
 };
