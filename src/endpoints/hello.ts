@@ -4,8 +4,8 @@ import { nit } from '../nit_api';
 
 export default async function (event: APIGatewayProxyEvent, context: Context) {
 
-  const a = nit(['.', '.'], 'As3s4c6c9d');
-
+  const a = await nit(['.', '.'], 'As3s4c6c9d');
+  console.log(a);
   return {
     statusCode: 200,
     body: JSON.stringify(a),
