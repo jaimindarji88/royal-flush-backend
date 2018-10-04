@@ -9,6 +9,7 @@
   "scripts": {
     "test": "jest",
     "tsc": "tsc",
+    "build-nit": "cd nit && npm i",
     "watch-sls": "sls offline",
     "start": "concurrently -k -p \"[{name}]\" -n \"TypeScript,SLS\" -c \"cyan.bold,yellow.bold\" \"npm run tsc -- -w\" \"npm run watch-sls\""
   },
