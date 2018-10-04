@@ -10,7 +10,7 @@ export interface ICalculateOdds {
     hand: string;
     win: number;
     tie: number;
-  }[]
+  }[];
 }
 
 export interface Nit {
