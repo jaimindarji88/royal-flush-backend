@@ -41,8 +41,6 @@ jobs:
             npm run build-nit
             npm install
             npm test
-            npm run tsc
-            npm run deploy
 
       - save_cache:
           paths:

@@ -7,10 +7,10 @@ provider:
     LD_LIBRARY_PATH: build/Release
 
 custom:
-  src: dist
+  src: dist/endpooints
   functions:
-    hello: ${self:custom.src}/handler.hello
-    histogram: ${self:custom.src}/handler.histogram
+    hello: ${self:custom.src}/hello.handler
+    histogram: ${self:custom.src}/histogram.handler
 
 package:
   include:

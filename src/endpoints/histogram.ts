@@ -4,7 +4,7 @@ import { histogram } from '../poker';
 
 import { Context, APIGatewayProxyEvent } from 'aws-lambda';
 
-export default async function (event: APIGatewayProxyEvent, context: Context) {
+export async function handler(event: APIGatewayProxyEvent, context: Context) {
   if (!event.body) {
     return {
       statusCode: 422,
