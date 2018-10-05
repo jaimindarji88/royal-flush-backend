@@ -18,11 +18,7 @@ jobs:
 
     steps:
       - checkout
-      - run:
-          name: 'use node 8.10.0'
-          command: |
-            source /root/.nvm/nvm.sh
-            nvm use 8.10.0
+      
 
       - run:
           name: 'submodules'
@@ -36,21 +32,19 @@ jobs:
           - v1-dependencies-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-      
-      - run: npm run build-nit
 
-      - run: npm install
+      - run:
+          name: 'node commands'
+          command: |
+            source /root/.nvm/nvm.sh
+            nvm use 8.10.0
+            npm run build-nit
+            npm install
+            npm test
+            npm run deploy
 
       - save_cache:
           paths:
             - node_modules
             - nit/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-        
-      # run tests!
-      - run: npm test
-
-      - run:
-          name: send to serverless dev
-          command: npm run deploy
-
