@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:8.10
+      - image: jasminder88/royal_flush_amazonlinux:latest
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -19,19 +19,25 @@ jobs:
     steps:
       - checkout
       - run:
+          name: 'use node 8.10.0'
+          command: |
+            source /root/.nvm/nvm.sh
+            nvm use 8.10.0
+
+      - run:
           name: 'submodules'
           command: |
             git submodule init
             git submodule update --remote
-
-      - run: npm run build-nit
-
+      
       # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
+      
+      - run: npm run build-nit
 
       - run: npm install
 
@@ -43,4 +49,8 @@ jobs:
         
       # run tests!
       - run: npm test
+
+      - run:
+          name: send to serverless dev
+          command: npm run deploy
 
