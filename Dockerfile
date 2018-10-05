@@ -1,4 +1,4 @@
-FROM amazonlinux:latest
+FROM amazonlinux:2017.03
 
 RUN /bin/bash -c "yum install -y deltarpm tar make wget gcc-c++ gzip git"
 
