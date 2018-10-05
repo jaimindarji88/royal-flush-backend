@@ -1,6 +1,6 @@
 FROM amazonlinux:latest
-dokc
-RUN /bin/bash -c "yum install -y tar make wget gcc-c++ gzip"
+
+RUN /bin/bash -c "yum install -y deltarpm tar make wget gcc-c++ gzip git"
 
 WORKDIR /tmp/cmake
 RUN wget http://www.cmake.org/files/v3.2/cmake-3.2.2.tar.gz && tar xf cmake-3.2.2.tar.gz && cd cmake-3.2.2 && ./configure && make && make install
