@@ -10,4 +10,5 @@ describe('testing the pokerstove api in nodejs', async () => {
     expect(odds.hands[0].win).toBeCloseTo(0.49, 1)
     expect(odds.hands[1].win).toBeCloseTo(0.49, 1)
   });
+  
 });
