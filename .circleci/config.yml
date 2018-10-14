@@ -30,8 +30,6 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
 
       - run:
           name: 'node commands'
@@ -46,4 +44,6 @@ jobs:
           paths:
             - node_modules
             - nit/node_modules
+            - build
+
           key: v1-dependencies-{{ checksum "package.json" }}
