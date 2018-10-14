@@ -39,8 +39,8 @@ jobs:
 
       - restore_cache:
           keys:
-          - nit-{{ checksum "nit/CMakeLists.txt" }}
-          - nit-
+          - build-{{ checksum "nit/CMakeLists.txt" }}
+          - build-
 
       - run:
           name: 'node commands'
@@ -64,4 +64,4 @@ jobs:
       - save_cache:
           paths:
             - build
-          key: nit-{{ checksum "nit/CMakeLists.txt" }}
+          key: build-{{ checksum "nit/CMakeLists.txt" }}
