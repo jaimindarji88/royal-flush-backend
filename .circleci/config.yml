@@ -30,8 +30,17 @@ jobs:
       - restore_cache:
           keys:
           - royal-flush-{{ checksum "package.json" }}
-          - nit-{{ checksum "nit/package.json" }}
+          - royal-flush-
+
+      - restore_cache:
+          keys:
+          - nit-node-{{ checksum "nit/package.json" }}
+          - nit-node-
+
+      - restore_cache:
+          keys:
           - nit-{{ checksum "build/Makefile" }}
+          - nit-
 
       - run:
           name: 'node commands'
@@ -50,7 +59,7 @@ jobs:
       - save_cache:
           paths:
             - nit/node_modules
-          key: nit-{{ checksum "nit/package.json" }}
+          key: nit-node-{{ checksum "nit/package.json" }}
 
       - save_cache:
           paths:
