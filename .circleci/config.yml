@@ -39,7 +39,7 @@ jobs:
 
       - restore_cache:
           keys:
-          - nit-{{ checksum "build/Makefile" }}
+          - nit-{{ checksum "nit/CMakeLists.txt" }}
           - nit-
 
       - run:
@@ -64,4 +64,4 @@ jobs:
       - save_cache:
           paths:
             - build
-          key: nit-{{ checksum "build/Makefile" }}
+          key: nit-{{ checksum "nit/CMakeLists.txt" }}
