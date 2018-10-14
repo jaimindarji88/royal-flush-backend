@@ -29,7 +29,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
+          - royal-flush-{{ checksum "package.json" }}
+          - nit-{{ checksum "nit/package.json" }}
+          - nit-{{ checksum "build/Makefile" }}
 
       - run:
           name: 'node commands'
@@ -43,7 +45,14 @@ jobs:
       - save_cache:
           paths:
             - node_modules
+          key: royal-flush-{{ checksum "package.json" }}
+      
+      - save_cache:
+          paths:
             - nit/node_modules
-            - build
+          key: nit-{{ checksum "nit/package.json" }}
 
-          key: v1-dependencies-{{ checksum "package.json" }}
+      - save_cache:
+          paths:
+            - build
+          key: nit-{{ checksum "build/Makefile" }}
