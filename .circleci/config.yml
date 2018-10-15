@@ -37,11 +37,6 @@ jobs:
           - nit-node-{{ checksum "nit/package.json" }}
           - nit-node-
 
-      - restore_cache:
-          keys:
-          - build-{{ checksum "nit/CMakeLists.txt" }}
-          - build-
-
       - run:
           name: 'node commands'
           command: |
@@ -60,8 +55,3 @@ jobs:
           paths:
             - nit/node_modules
           key: nit-node-{{ checksum "nit/package.json" }}
-
-      - save_cache:
-          paths:
-            - build
-          key: build-{{ checksum "nit/CMakeLists.txt" }}
