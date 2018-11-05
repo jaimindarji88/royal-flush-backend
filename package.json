@@ -1,6 +1,6 @@
 {
   "name": "royal-flush",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "poker odds api running using nodejs and pokerstove",
   "main": "index.js",
   "author": "jaimin darji",
