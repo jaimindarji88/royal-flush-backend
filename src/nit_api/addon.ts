@@ -17,6 +17,6 @@ export interface Nit {
   calculateOdds(obj: { hands: string[]; board: string }): ICalculateOdds;
 }
 
-const nitAddon:Nit = addon;
+const nitAddon: Nit = addon;
 
 export default nitAddon;
