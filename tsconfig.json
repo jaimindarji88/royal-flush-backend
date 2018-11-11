@@ -17,7 +17,9 @@
   },
   "exclude": [
     "tests",
-    "node_modules"
+    "node_modules",
+    "dist",
+    "nit"
   ],
   "compileOnSave": true
 }

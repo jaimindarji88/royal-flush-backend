@@ -2,14 +2,21 @@ import _ from 'lodash';
 
 import Card from './Card';
 import Deck from './Deck';
-import { createHistogram } from './utilities';
+import { createHistogram, generateRandomBoards, calcOdds } from './utilities';
+import { nit } from '../nit_api';
 
-export function histogram(
-  myHand: string,
-  otherHands: string[],
-  board: string = '',
-  iters = 1000,
-) {
+interface IHistInput {
+  myHand: string;
+  otherHands: string[];
+  board: string;
+}
+
+interface IOddsInput {
+  hands: string[];
+  board: string;
+}
+
+export function histogram({ myHand, otherHands, board }: IHistInput, iters: number) {
   const myCards = Card.stringToCards(myHand);
   const otherCards = otherHands.map(hand => Card.stringToCards(hand));
   const boardCards = Card.stringToCards(board);
@@ -21,4 +28,9 @@ export function histogram(
   return createHistogram(deck, myCards, iters);
 }
 
-export function odds() {}
+export function handOdds({ hands, board = '' }: IOddsInput, iters: number) {
+  const cardHands = hands.map(hand => Card.stringToCards(hand));
+  const deck = new Deck(_.flatten(cardHands));
+
+  return calcOdds(deck, hands, board, iters);
+}

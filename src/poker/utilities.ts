@@ -5,6 +5,7 @@ import Random from 'random-js';
 import Analyse from './Analyse';
 import Card from './Card';
 import Deck from './Deck';
+import { nit } from '../nit_api';
 
 import { HISTOGRAM, IHistogram } from './constants';
 
@@ -38,6 +39,33 @@ export function createHistogram(deck: Deck, hand: Card[], iters = 1000) {
   return histogram;
 }
 
-export function calcOdds(hands: Card[][], board: Card[]) {
-  // const handString = hands.reduce();
+export async function calcOdds(deck: Deck, hands: string[], board: string, iters: number) {
+  const oddsList = Array(hands.length).fill(0).map((_, index) => {
+    return {
+      win: 0,
+      tie: 0,
+      hand: hands[index],
+    };
+  });
+
+  for (const genBoard of generateRandomBoards(deck, board.length, iters)) {
+    console.log(genBoard);
+    const odds = await nit(hands, Card.cardsToString(genBoard));
+    odds.hands.forEach((foundOdds) => {
+      const { hand, win, tie } = foundOdds;
+      oddsList.forEach((savedHands) => {
+        if (hand !== savedHands.hand) return;
+        savedHands.win += win;
+        savedHands.tie += tie;
+      });
+    });
+    break;
+  }
+
+  // oddsList.forEach((hand) => {
+  //   hand.win /= iters;
+  //   hand.tie /= iters;
+  // });
+
+  return oddsList;
 }
