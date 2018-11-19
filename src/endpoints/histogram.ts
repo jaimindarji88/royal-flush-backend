@@ -16,25 +16,21 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
     hand: Joi.string().length(4).required(),
     others: Joi.array().items(Joi.string().length(4)),
     board: Joi.string().min(6).max(10),
-    iters: Joi.number(),
   });
 
-  let hist;
   const data = JSON.parse(event.body);
-  const result = Joi.validate(data, schema);
+  const query = event.queryStringParameters || {};
+  const iters = Number(query.iters) || 1000;
 
-  if (result.error) {
+  const validate = Joi.validate(data, schema);
+  if (validate.error) {
     return {
       statusCode: 422,
-      errors: result.error,
+      errors: validate.error,
     };
   }
 
-  if (data.iters) {
-    hist = histogram(data.hand, data.others, data.board, data.iters);
-  } else {
-    hist = histogram(data.hand, data.others);
-  }
+  const hist = histogram(data, iters);
 
   return {
     statusCode: 200,
