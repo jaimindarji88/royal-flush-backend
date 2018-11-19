@@ -6,5 +6,11 @@ export async function nit(hands: string[] = [], board: string = '') {
     board,
   };
 
+  for (const hand of hands) {
+    if (hand === '.' && board === '') {
+      throw Error('The board cannot be empty with a random hand');
+    }
+  }
+
   return addon.calculateOdds(obj);
 }

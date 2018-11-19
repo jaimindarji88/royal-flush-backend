@@ -12,8 +12,6 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
     };
   }
 
-  console.log(event);
-
   const schema = Joi.object({
     hand: Joi.string().length(4).required(),
     others: Joi.array().items(Joi.string().length(4)),

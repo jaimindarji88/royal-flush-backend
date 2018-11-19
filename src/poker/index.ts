@@ -6,8 +6,8 @@ import { createHistogram, generateRandomBoards, calcOdds } from './utilities';
 import { nit } from '../nit_api';
 
 interface IHistInput {
-  myHand: string;
-  otherHands: string[];
+  hand: string;
+  others: string[];
   board: string;
 }
 
@@ -16,16 +16,17 @@ interface IOddsInput {
   board: string;
 }
 
-export function histogram({ myHand, otherHands, board }: IHistInput, iters: number) {
-  const myCards = Card.stringToCards(myHand);
-  const otherCards = otherHands.map(hand => Card.stringToCards(hand));
-  const boardCards = Card.stringToCards(board);
+export function histogram({ hand, others, board = '' }: IHistInput, iters: number) {
+  const myCards = Card.stringToCards(hand);
+  const otherCards = others.map(h => Card.stringToCards(h));
+
+  const boardCards = board ? Card.stringToCards(board) : [];
 
   const deck = new Deck(
     myCards.concat(_.flatten(otherCards)).concat(boardCards),
   );
 
-  return createHistogram(deck, myCards, iters);
+  return createHistogram(deck, myCards, board, iters);
 }
 
 export function handOdds({ hands, board = '' }: IOddsInput, iters: number) {
