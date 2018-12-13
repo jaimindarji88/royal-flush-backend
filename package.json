@@ -9,6 +9,7 @@
   "scripts": {
     "test": "jest",
     "tsc": "tsc",
+    "band": "rm -rf build && npm run tsc && npm run deploy",
     "build-nit": "cd nit && npm i && npm run build",
     "deploy": "sls deploy",
     "watch-sls": "sls offline",
