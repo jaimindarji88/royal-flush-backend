@@ -17,7 +17,7 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
   const data = JSON.parse(event.body);
 
   const schema = Joi.object({
-    hands: Joi.string().length(4).required(),
+    hands: Joi.array().items(Joi.string()).min(2).max(8).required(),
     board: Joi.string().min(6).max(10),
   });
   const validate = Joi.validate(data, schema);
