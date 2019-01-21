@@ -12,8 +12,9 @@
     "band": "rm -rf dist && npm run tsc && npm run deploy",
     "build-nit": "cd nit && npm i && npm run build",
     "deploy": "sls deploy",
-    "watch-sls": "sls offline",
-    "start": "concurrently -k -p \"[{name}]\" -n \"TypeScript,SLS\" -c \"cyan.bold,yellow.bold\" \"npm run tsc -- -w\" \"npm run watch-sls\""
+    "watch-sls": "sls offline start --skipCacheInvalidation",
+    "watch-tsc": "tsc -w",
+    "start": "nodemon --exec npm run watch-sls"
   },
   "dependencies": {
     "es-iter": "^1.1.1",
@@ -35,6 +36,7 @@
     "@types/shelljs": "^0.8.0",
     "concurrently": "^4.0.1",
     "jest": "^23.5.0",
+    "nodemon": "^1.18.9",
     "serverless-offline": "^3.25.11",
     "ts-jest": "^23.1.4",
     "tslint": "^5.11.0",
