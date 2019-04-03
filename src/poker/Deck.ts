@@ -10,7 +10,7 @@ import Random, { MT19937 } from 'random-js';
 export default class Deck {
   public cards: Card[];
   public engine: MT19937;
-  constructor(holeCards: Card[] = [], seed: number | null = null) {
+  constructor(holeCards: Card[] = [], seed?: number) {
     this.cards = this.generateDeck(holeCards);
     if (seed) {
       this.engine = randomEngine.seed(seed);

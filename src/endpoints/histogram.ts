@@ -13,9 +13,14 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
   }
 
   const schema = Joi.object({
-    hand: Joi.string().length(4).required(),
+    hand: Joi.string()
+      .length(4)
+      .required(),
     others: Joi.array().items(Joi.string().length(4)),
-    board: Joi.string().min(6).max(10),
+    board: Joi.string()
+      .min(6)
+      .max(10),
+    seed: Joi.string(),
   });
 
   const data = JSON.parse(event.body);

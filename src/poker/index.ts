@@ -9,6 +9,7 @@ interface IHistInput {
   hand: string;
   others: string[];
   board: string;
+  seed?: number;
 }
 
 interface IOddsInput {
@@ -16,7 +17,10 @@ interface IOddsInput {
   board: string;
 }
 
-export function histogram({ hand, others, board = '' }: IHistInput, iters: number) {
+export function histogram(
+  { hand, others = [], board = '', seed = undefined }: IHistInput,
+  iters: number,
+) {
   const myCards = Card.stringToCards(hand);
   const otherCards = others.map(h => Card.stringToCards(h));
 
@@ -24,9 +28,10 @@ export function histogram({ hand, others, board = '' }: IHistInput, iters: numbe
 
   const deck = new Deck(
     myCards.concat(_.flatten(otherCards)).concat(boardCards),
+    seed,
   );
 
-  return createHistogram(deck, myCards, board, iters);
+  return createHistogram(deck, myCards, boardCards, iters);
 }
 
 export function handOdds({ hands, board = '' }: IOddsInput, iters: number) {
