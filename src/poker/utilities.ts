@@ -19,43 +19,61 @@ export function* generateRandomBoards(
   }
 }
 
-export function createHistogram(deck: Deck, hand: Card[], board: string = '', iters = 1000) {
+export function createHistogram(
+  deck: Deck,
+  hand: Card[],
+  board: Card[] = [],
+  iters = 1000,
+) {
   const histogram: IHistogram = { ...HISTOGRAM };
 
-  for (const genBoard of generateRandomBoards(deck, board.length / 2, iters)) {
-    const analysedHand = new Analyse(genBoard.concat(hand));
+  if (board.length === 5) {
+    const finalBoard = hand.concat(board);
+    const analysedHand = new Analyse(finalBoard);
     const { rankName } = analysedHand;
-    if (rankName in histogram) {
-      histogram[rankName] += 1;
+    histogram[rankName] = 100;
+  } else {
+    for (const genBoard of generateRandomBoards(deck, board.length, iters)) {
+      const finalBoard = genBoard.concat(hand).concat(board);
+      const analysedHand = new Analyse(finalBoard);
+      const { rankName } = analysedHand;
+      if (rankName in histogram) {
+        histogram[rankName] += 1;
+      }
     }
-  }
 
-  for (const key in histogram) {
-    histogram[key] /= iters;
-    histogram[key] *= 100;
-    histogram[key] = Math.round(histogram[key] * 100) / 100;
+    for (const key in histogram) {
+      histogram[key] /= iters;
+      histogram[key] *= 100;
+      histogram[key] = Math.round(histogram[key] * 100) / 100;
+    }
   }
 
   return histogram;
 }
 
-export
-  async function calcOdds(deck: Deck, hands: string[], board: string = '', iters: number = 1000) {
-
-  const oddsList = Array(hands.length).fill(0).map((_, index) => {
-    return {
-      win: 0,
-      tie: 0,
-      hand: hands[index] === '.' ? 'random' : hands[index],
-    };
-  });
+export async function calcOdds(
+  deck: Deck,
+  hands: string[],
+  board: string = '',
+  iters: number = 1000,
+) {
+  const oddsList = Array(hands.length)
+    .fill(0)
+    .map((_, index) => {
+      return {
+        win: 0,
+        tie: 0,
+        hand: hands[index] === '.' ? 'random' : hands[index],
+      };
+    });
 
   for (const genBoard of generateRandomBoards(deck, board.length / 2, iters)) {
     const newBoard = Card.cardsToString(genBoard) + board;
     const odds = await nit(hands, Card.cardsToString(genBoard));
-    odds.hands.forEach((foundOdds) => {
+    odds.hands.forEach(foundOdds => {
       const { hand, win, tie } = foundOdds;
-      oddsList.forEach((savedHands) => {
+      oddsList.forEach(savedHands => {
         if (hand !== savedHands.hand) return;
         savedHands.win += win;
         savedHands.tie += tie;
@@ -63,7 +81,7 @@ export
     });
   }
 
-  oddsList.forEach((odds) => {
+  oddsList.forEach(odds => {
     odds.win /= iters;
     odds.tie /= iters;
   });
