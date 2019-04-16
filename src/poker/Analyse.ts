@@ -1,19 +1,18 @@
 import _ from 'lodash';
 
 import Card from './Card';
-import { handRanks } from './constants';
+import { handRanks, SUIT_VALS } from './constants';
 
 export interface IHash {
   [key: number]: number;
 }
 
 export default class AnalyseCards {
-
   public static cardsToSuitHash(cards: Card[]) {
     const hash: IHash = {};
 
-    cards.forEach((card) => {
-      if (hash[card.suit] in hash) {
+    cards.forEach(card => {
+      if (card.suit in hash) {
         hash[card.suit] += 1;
       } else {
         hash[card.suit] = 1;
@@ -25,7 +24,7 @@ export default class AnalyseCards {
 
   public static cardsToValueHash(cards: Card[]) {
     const hash: IHash = {};
-    cards.forEach((card) => {
+    cards.forEach(card => {
       if (card.value in hash) {
         hash[card.value] += 1;
       } else {
@@ -36,16 +35,18 @@ export default class AnalyseCards {
   }
 
   public static sortCards(cards: Card[]): Card[] {
-    return cards.map(x => x).sort((a, b) => {
-      if (a.value > b.value) {
-        return 1;
-      } else if (a.value < b.value) {
-        return -1;
-      } else if (a.suit > b.suit) {
-        return 1;
-      }
-      return 0;
-    });
+    return cards
+      .map(x => x)
+      .sort((a, b) => {
+        if (a.value > b.value) {
+          return 1;
+        } else if (a.value < b.value) {
+          return -1;
+        } else if (a.suit > b.suit) {
+          return 1;
+        }
+        return 0;
+      });
   }
 
   public valHash: IHash;
@@ -93,7 +94,7 @@ export default class AnalyseCards {
     }
 
     for (const suit in this.suitHash) {
-      if (this.suitHash[suit] === 5) {
+      if (this.suitHash[suit] >= 5) {
         flush = true;
         rank = 5;
       }
@@ -115,8 +116,11 @@ export default class AnalyseCards {
   }
 
   private detectStraight(): boolean {
-    let continuous = 0;
-    const vals = Object.keys(this.valHash).sort();
+    let continuous = 1;
+    const vals = Object.keys(this.valHash)
+      .map(Number)
+      .sort((a, b) => a - b);
+
     for (let i = 0; i < vals.length - 1; i += 1) {
       if (vals[i] + 1 === vals[i + 1]) {
         continuous += 1;
@@ -130,14 +134,21 @@ export default class AnalyseCards {
   }
 
   private detectRoyal(): boolean {
-    const royal = ['10', 'J', 'Q', 'K', 'A'];
+    const royal = ['T', 'J', 'Q', 'K', 'A'];
     const getSuit = _.maxBy(Object.entries(this.suitHash), e => e[1]);
 
     if (getSuit) {
       for (const val of royal) {
-        const card = new Card(val, getSuit[0]);
+        const card = new Card(val, SUIT_VALS[Number(getSuit[0])]);
 
-        if (!_.includes(this.cards, card)) {
+        let found = false;
+        for (const c of this.cards) {
+          if (c.exact_equals(card)) {
+            found = true;
+          }
+        }
+
+        if (!found) {
           return false;
         }
       }

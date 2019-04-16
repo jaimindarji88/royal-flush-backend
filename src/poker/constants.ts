@@ -3,9 +3,19 @@ export const SUIT_INDEX: ISuits = { s: 0, c: 1, h: 2, d: 3 };
 export const VALS = 'AKQJT98765432';
 
 export const SUIT_INDEX_VALS: ICards = {
-  2: 2, 3: 3, 4: 4, 5: 5, 6: 6,
-  7: 7, 8: 8, 9: 9,
-  T: 10, J: 11, Q: 12, K: 13, A: 14,
+  2: 2,
+  3: 3,
+  4: 4,
+  5: 5,
+  6: 6,
+  7: 7,
+  8: 8,
+  9: 9,
+  T: 10,
+  J: 11,
+  Q: 12,
+  K: 13,
+  A: 14,
 };
 
 export const HISTOGRAM: IHistogram = {
@@ -21,7 +31,7 @@ export const HISTOGRAM: IHistogram = {
   royal_flush: 0,
 };
 
-export const handRanks: { [key: number]: string; } = {
+export const handRanks: { [key: number]: string } = {
   0: 'high_card',
   1: 'pair',
   2: 'two_pair',
