@@ -298,15 +298,3 @@ describe('Creates a histogram for a given hand', () => {
     });
   });
 });
-
-describe('more tests for histogram', () => {
-  const hand = [new Card('A', 'c'), new Card('K', 'c')];
-  const deck = new Deck(hand);
-  test('chances of getting a straight', () => {
-    const histogram = createHistogram(deck, hand);
-
-    console.log(histogram);
-
-    expect(2).toEqual(3);
-  });
-});
