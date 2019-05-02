@@ -2,7 +2,12 @@ import _ from 'lodash';
 
 import Card from './Card';
 import Deck from './Deck';
-import { createHistogram, generateRandomBoards, calcOdds } from './utilities';
+import {
+  createHistogram,
+  generateRandomBoards,
+  calcOdds,
+  randomOdds,
+} from './utilities';
 import { nit } from '../nit_api';
 
 interface IHistInput {
@@ -38,5 +43,15 @@ export function handOdds({ hands, board = '' }: IOddsInput, iters: number) {
   const cardHands = hands.map(hand => Card.stringToCards(hand));
   const deck = new Deck(_.flatten(cardHands));
 
+  let randCount = 0;
+  hands.forEach((hand: string) => {
+    if (hand === '.') {
+      randCount += 1;
+    }
+  });
+
+  if (randCount >= 2) {
+    return randomOdds(deck, cardHands[0], randCount, board);
+  }
   return calcOdds(deck, hands, board, iters);
 }

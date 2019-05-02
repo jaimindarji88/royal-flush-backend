@@ -1,6 +1,11 @@
-import { createHistogram } from '../../src/poker/utilities';
+import {
+  createHistogram,
+  genRandomHands,
+  randomOdds,
+} from '../../src/poker/utilities';
 import Card from '../../src/poker/Card';
 import Deck from '../../src/poker/Deck';
+import { Iter } from 'es-iter';
 
 describe('Creates a histogram for a given hand', () => {
   const hand = [new Card('K', 's'), new Card('K', 'd')];
@@ -296,5 +301,31 @@ describe('Creates a histogram for a given hand', () => {
       straight_flush: 0,
       royal_flush: 100,
     });
+  });
+});
+
+describe('generate random hands', () => {
+  test('1326 different hands', () => {
+    const deck = new Deck();
+    const hands = genRandomHands(deck).toArray();
+
+    expect(hands.length).toBe(1326);
+  });
+});
+
+describe('generate random odds', () => {
+  test('2 random people with no board', async () => {
+    const hand = [new Card('K', 's'), new Card('K', 'd')];
+    const deck = new Deck(hand);
+
+    const odds = await randomOdds(deck, hand, 2);
+
+    expect(odds[0].hand).toBe('KsKd');
+    expect(odds[0].win).toBeCloseTo(0.68, 1);
+    expect(odds[0].tie).toBeCloseTo(0.002, 2);
+
+    expect(odds[1].hand).toBe('random');
+    expect(odds[1].win).toBeCloseTo(0.15, 1);
+    expect(odds[1].tie).toBeCloseTo(0.007, 2);
   });
 });

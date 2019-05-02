@@ -9,17 +9,10 @@
     "strict": true,
     "outDir": "dist",
     "rootDir": "src",
-    "lib": [
-      "es2017",
-      "dom"
-    ],
-    "downlevelIteration": true
+    "lib": ["es2017", "dom"],
+    "downlevelIteration": true,
+    "typeRoots": ["./node_modules/@types", "./typings"]
   },
-  "exclude": [
-    "tests",
-    "node_modules",
-    "dist",
-    "nit"
-  ],
+  "exclude": ["tests", "node_modules", "dist", "nit"],
   "compileOnSave": true
 }
