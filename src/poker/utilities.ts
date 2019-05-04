@@ -1,4 +1,4 @@
-const Iter = require('es-iter');
+import Iter from 'es-iter';
 
 import _ from 'lodash';
 import Random from 'random-js';
@@ -9,7 +9,6 @@ import Deck from './Deck';
 import { nit } from '../nit_api';
 
 import { HISTOGRAM, IHistogram } from './constants';
-import { ICalculateOdds } from '../nit_api/addon';
 
 export function* generateRandomBoards(
   deck: Deck,
@@ -109,7 +108,7 @@ export async function randomOdds(
     },
   ];
 
-  for (let i = 0; i < numRandom; i++) {
+  for (let i = 0; i < numRandom; i += 1) {
     const handsComb = genRandomHands(deck).toArray();
 
     numHands = handsComb.length;
@@ -175,19 +174,6 @@ interface IRandomOdds {
   playerHand: Card[];
   numRandom: number;
   board?: string;
-}
-
-export async function manyOdds(
-  { deck, playerHand, numRandom, board }: IRandomOdds,
-  num: number,
-) {
-  const allOdds = [];
-
-  for (const n of num) {
-    allOdds.push(randomOdds(deck, playerHand, numRandom, board));
-  }
-
-  const aOdds = await Promise.all(allOdds);
 }
 
 export function genRandomHands(deck: Deck) {
