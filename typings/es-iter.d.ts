@@ -13,7 +13,7 @@ declare class es_iter<I> {
 
   chain(...iterables: Iterable<I>[]): IIter<I>;
 
-  combinations(n: number): IIter<I>;
+  combinations(n: number): es_iter<I>;
 
   compress(selectors: boolean[]): IIter<I>;
 

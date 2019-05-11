@@ -1,3 +1,5 @@
+import Iter from 'es-iter';
+
 import {
   createHistogram,
   genRandomHands,
@@ -5,7 +7,6 @@ import {
 } from '../../src/poker/utilities';
 import Card from '../../src/poker/Card';
 import Deck from '../../src/poker/Deck';
-import { Iter } from 'es-iter';
 
 describe('Creates a histogram for a given hand', () => {
   const hand = [new Card('K', 's'), new Card('K', 'd')];

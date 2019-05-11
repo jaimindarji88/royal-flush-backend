@@ -19,9 +19,19 @@ describe('testing the pokerstove api in nodejs', async () => {
     expect(odds.hands[1].win).toBeCloseTo(0.097, 1);
   });
 
-  test('four different hands', async () => {
+  test('five different hands', async () => {
     const odds = await nit(['AsAc', 'KsKc', 'TsTc', 'JsJc', '3s3c']);
 
     expect(odds.hands.length).toBe(5);
+  });
+
+  test('three hands and a board', async () => {
+    const data = { hands: ['QsQc', '5d3s', '8c9h'], board: 'AsKcTd3c4c' };
+
+    const odds = await nit(data.hands, data.board);
+
+    expect(odds.hands.length).toBe(3);
+    console.log(odds);
+    expect(1).toBe(2);
   });
 });
