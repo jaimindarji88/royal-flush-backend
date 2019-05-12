@@ -69,9 +69,15 @@ export async function calcOdds(
       };
     });
 
+  if (board.length === 10) {
+    const odds = await nit(hands, board);
+    return odds.hands;
+  }
+
   for (const genBoard of generateRandomBoards(deck, board.length / 2, iters)) {
     const newBoard = Card.cardsToString(genBoard) + board;
-    const odds = await nit(hands, Card.cardsToString(genBoard));
+
+    const odds = await nit(hands, newBoard);
     odds.hands.forEach(foundOdds => {
       const { hand, win, tie } = foundOdds;
       oddsList.forEach(savedHands => {
@@ -96,9 +102,9 @@ export async function randomOdds(
   numRandom: number,
   board: string = '',
 ) {
-  let numHands = 0;
   const playerString = Card.cardsToString(playerHand);
   const handCombinations = [];
+  const BOARD_ITERS = 12;
 
   const oddsList = [
     {
@@ -110,8 +116,6 @@ export async function randomOdds(
 
   for (let i = 0; i < numRandom; i += 1) {
     const handsComb = genRandomHands(deck).toArray();
-
-    numHands = handsComb.length;
 
     const randomHands = Random.shuffle(deck.engine, handsComb);
     handCombinations.push(randomHands);
@@ -140,10 +144,10 @@ export async function randomOdds(
     for (const genBoard of generateRandomBoards(
       boardDeck,
       board.length / 2,
-      12,
+      BOARD_ITERS,
     )) {
       const odds = await nit(hands, Card.cardsToString(genBoard) + board);
-      for (let i = 0; i < odds.hands.length; i++) {
+      for (let i = 0; i < odds.hands.length; i += 1) {
         oddsList[i].win += odds.hands[i].win;
         oddsList[i].tie += odds.hands[i].tie;
       }
