@@ -31,7 +31,5 @@ describe('testing the pokerstove api in nodejs', async () => {
     const odds = await nit(data.hands, data.board);
 
     expect(odds.hands.length).toBe(3);
-    console.log(odds);
-    expect(1).toBe(2);
   });
 });

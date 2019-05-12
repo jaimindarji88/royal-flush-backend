@@ -42,6 +42,7 @@ export function histogram(
 export function handOdds({ hands, board = '' }: IOddsInput, iters: number) {
   const cardHands = hands.map(hand => Card.stringToCards(hand));
   const deck = new Deck(_.flatten(cardHands));
+  let i = iters;
 
   let randCount = 0;
   hands.forEach((hand: string) => {
@@ -50,8 +51,12 @@ export function handOdds({ hands, board = '' }: IOddsInput, iters: number) {
     }
   });
 
+  if (hands.length >= 3) {
+    i = 150;
+  }
+
   if (randCount >= 2) {
     return randomOdds(deck, cardHands[0], randCount, board);
   }
-  return calcOdds(deck, hands, board, iters);
+  return calcOdds(deck, hands, board, i);
 }
