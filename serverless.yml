@@ -28,18 +28,21 @@ functions:
       - http:
           path: api/hello
           method: get
+          cors: true
   histogram:
     handler: ${self:custom.functions.histogram}
     events:
       - http:
           path: api/histogram
           method: post
+          cors: true
   odds:
     handler: ${self:custom.functions.odds}
     events:
       - http:
           path: api/odds
           method: post
+          cors: true
 
 plugins:
   - serverless-offline
