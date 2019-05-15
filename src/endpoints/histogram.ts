@@ -32,6 +32,10 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
     return {
       statusCode: 422,
       errors: validate.error,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
     };
   }
 
@@ -40,5 +44,9 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
   return {
     statusCode: 200,
     body: JSON.stringify({ histogram: hist }),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
   };
 }

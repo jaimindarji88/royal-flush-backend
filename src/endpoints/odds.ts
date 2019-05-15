@@ -17,14 +17,24 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
   const data = JSON.parse(event.body);
 
   const schema = Joi.object({
-    hands: Joi.array().items(Joi.string()).min(2).max(8).required(),
-    board: Joi.string().min(6).max(10),
+    hands: Joi.array()
+      .items(Joi.string())
+      .min(2)
+      .max(8)
+      .required(),
+    board: Joi.string()
+      .min(6)
+      .max(10),
   });
   const validate = Joi.validate(data, schema);
   if (validate.error) {
     return {
       statusCode: 422,
       body: JSON.stringify(validate.error),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
     };
   }
 
@@ -33,5 +43,9 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
   return {
     statusCode: 200,
     body: JSON.stringify({ odds }),
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
   };
 }
