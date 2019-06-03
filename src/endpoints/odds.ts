@@ -33,7 +33,7 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
       body: JSON.stringify(validate.error),
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Methods': 'POST',
         'Content-Type': 'application/json',
       },
     };
@@ -46,7 +46,7 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
     body: JSON.stringify({ odds }),
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
+      'Access-Control-Allow-Methods': 'POST',
       'Content-Type': 'application/json',
     },
   };
