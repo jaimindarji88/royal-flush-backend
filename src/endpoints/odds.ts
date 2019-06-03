@@ -38,12 +38,12 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
       },
     };
   }
-
+  console.log('before odds');
   const odds = await handOdds(data, iters);
-  console.log(odds);
+  console.log('after odds');
   return {
     statusCode: 200,
-    body: JSON.stringify({ hello: odds }),
+    body: JSON.stringify({ hello: { woweeee: 123 } }),
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'POST',
