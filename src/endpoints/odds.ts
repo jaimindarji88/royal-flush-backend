@@ -34,6 +34,7 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
+        'Content-Type': 'application/json',
       },
     };
   }
@@ -46,6 +47,7 @@ export async function handler(event: APIGatewayProxyEvent, context: Context) {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true,
+      'Content-Type': 'application/json',
     },
   };
 }
