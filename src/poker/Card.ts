@@ -1,9 +1,19 @@
 import _ from 'lodash';
 
-import { SUIT_INDEX, SUIT_INDEX_VALS } from './constants';
+import Hand from './Hand';
+import { SUIT_INDEX, SUIT_INDEX_VALS, SUIT_VALS } from './constants';
 
 export default class Card {
-  public static stringToCards(str: string): Card[] {
+  public static stringToCards(str: string, seed?: number): Card[] {
+    // returns a hand
+    if (str.length === 3) {
+      if (str[2] === 'o') {
+        return new Hand(str, false, seed).cards;
+      } else if (str[2] === 's') {
+        return new Hand(str, true, seed).cards;
+      }
+    }
+
     const formatted = _.compact(str.split(/(\w[s|c|h|d])/));
 
     return formatted.map(card => new Card(card[0], card[1]));
@@ -26,7 +36,7 @@ export default class Card {
   public readonly suit: number;
   public readonly string: string;
 
-  constructor(val: string | null = null, s: string | null = null) {
+  constructor(val?: string, s?: string) {
     if (val && s) {
       this.value = SUIT_INDEX_VALS[val];
       this.suit = SUIT_INDEX[s];

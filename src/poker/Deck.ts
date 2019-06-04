@@ -1,11 +1,10 @@
 const Iter = require('es-iter');
 import _ from 'lodash';
+import Random, { MT19937 } from 'random-js';
 
 import Card from './Card';
 import { VALS, SUIT_VALS } from './constants';
 import randomEngine from './engine';
-
-import Random, { MT19937 } from 'random-js';
 
 export default class Deck {
   public cards: Card[];

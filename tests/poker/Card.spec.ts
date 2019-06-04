@@ -4,6 +4,8 @@ const lowCard = new Card('T', 'd');
 const cards = [new Card('A', 's'), new Card('A', 'c')];
 
 describe('Static methods', () => {
+  const seed = 1337;
+
   test('string to cards', () => {
     expect(Card.stringToCards('AsAc')).toEqual(cards);
   });
@@ -17,6 +19,18 @@ describe('Static methods', () => {
 
     expect(Card.handIsHidden(hiddenHand)).toBe(true);
     expect(Card.handIsHidden(cards)).toBe(false);
+  });
+
+  test('offsuit hand', () => {
+    const cards = [new Card('9', 'd'), new Card('7', 'c')];
+
+    expect(Card.stringToCards('97o', seed)).toEqual(cards);
+  });
+
+  test('suited hand', () => {
+    const cards = [new Card('9', 's'), new Card('7', 's')];
+
+    expect(Card.stringToCards('97s', seed)).toEqual(cards);
   });
 });
 
