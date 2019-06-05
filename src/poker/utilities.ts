@@ -55,29 +55,29 @@ export function createHistogram(
 
 export async function calcOdds(
   deck: Deck,
-  hands: string[],
+  hands: Card[][],
   board: string = '',
   iters: number = 1000,
 ) {
+  const handsStrings = hands.map(hand => Card.cardsToString(hand));
+
   const oddsList = Array(hands.length)
     .fill(0)
-    .map((_, index) => {
-      return {
-        win: 0,
-        tie: 0,
-        hand: hands[index] === '.' ? 'random' : hands[index],
-      };
-    });
+    .map((_, index) => ({
+      win: 0,
+      tie: 0,
+      hand: Card.handIsHidden(hands[index]) ? 'random' : handsStrings[index],
+    }));
 
   if (board.length === 10) {
-    const odds = await nit(hands, board);
+    const odds = await nit(handsStrings, board);
     return odds.hands;
   }
 
   for (const genBoard of generateRandomBoards(deck, board.length / 2, iters)) {
     const newBoard = Card.cardsToString(genBoard) + board;
 
-    const odds = await nit(hands, newBoard);
+    const odds = await nit(handsStrings, newBoard);
     odds.hands.forEach(foundOdds => {
       const { hand, win, tie } = foundOdds;
       oddsList.forEach(savedHands => {

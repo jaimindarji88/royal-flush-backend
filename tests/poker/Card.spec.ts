@@ -28,7 +28,7 @@ describe('Static methods', () => {
   });
 
   test('suited hand', () => {
-    const cards = [new Card('9', 's'), new Card('7', 's')];
+    const cards = [new Card('9', 'd'), new Card('7', 'd')];
 
     expect(Card.stringToCards('97s', seed)).toEqual(cards);
   });

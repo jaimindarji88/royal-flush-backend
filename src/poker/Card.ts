@@ -12,6 +12,8 @@ export default class Card {
       } else if (str[2] === 's') {
         return new Hand(str, true, seed).cards;
       }
+    } else if (str.length === 2) {
+      return new Hand(str, false, seed).cards;
     }
 
     const formatted = _.compact(str.split(/(\w[s|c|h|d])/));
@@ -44,7 +46,7 @@ export default class Card {
     } else {
       this.value = 0;
       this.suit = 0;
-      this.string = 'random';
+      this.string = '.';
     }
   }
 

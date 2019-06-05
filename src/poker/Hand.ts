@@ -23,7 +23,7 @@ export default class Hand {
   }
 
   private createOffSuitHand(first: string, second: string) {
-    const suits = Random.shuffle(this.engine, SUIT_VALS);
+    const suits = Random.shuffle(this.engine, [...SUIT_VALS]);
 
     const firstSuit = suits.pop();
     const secondSuit = suits.pop();
@@ -32,7 +32,7 @@ export default class Hand {
   }
 
   private createSuitedHand(first: string, second: string) {
-    const suits = Random.shuffle(this.engine, SUIT_VALS);
+    const suits = Random.shuffle(this.engine, [...SUIT_VALS]);
 
     const suit = suits.pop();
 
