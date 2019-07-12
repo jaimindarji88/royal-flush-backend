@@ -20,7 +20,7 @@
   "dependencies": {
     "es-iter": "^1.1.1",
     "joi": "^13.7.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.13",
     "merge": "^1.2.1",
     "random-js": "^1.0.8",
     "serverless": "^1.45.1",
