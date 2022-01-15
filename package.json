@@ -24,7 +24,7 @@
     "merge": "^1.2.1",
     "random-js": "^1.0.8",
     "serverless": "^1.45.1",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.27",
